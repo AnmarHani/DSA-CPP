@@ -1,0 +1,38 @@
+# Ignore build artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+*.dylib
+
+# Ignore debug files
+*.dSYM/
+*.DS_Store
+
+# Ignore compiled binaries
+/data_structures/ds_main
+/data_structures/executable
+/data_structures/queue_use_exe
+/data_structures/stack_use_exe
+
+# Ignore temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*.bak
+*.~*
+
+# Ignore Visual Studio Code settings
+.vscode/
+
+# Ignore CMake build directories
+build/
+cmake-build-*/
+
+# Ignore system files
+Thumbs.db
+desktop.ini
