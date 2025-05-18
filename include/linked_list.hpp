@@ -4,22 +4,21 @@
 #include <linked_list_node.hpp>
 
 // Double-Circular Linked List
-template <int capacity>
+template <typename NodesDataType, int capacity>
 class LinkedList
 {
 private:
-    Node *m_head;
-    Node *m_tail;
-    Node *m_list[capacity];
+    Node<NodesDataType> *m_head;
+    Node<NodesDataType> *m_tail;
 
-    Node *getLastNode() const
+    Node<NodesDataType> *getLastNode() const
     {
         if (IsEmpty())
             throw std::underflow_error("LinkedList is Empty!");
 
-        Node *ptr = head;
+        Node<NodesDataType> *ptr = m_head;
 
-        while (ptr->next != NULL)
+        while (ptr->next != m_head) // Traverse until the last node<NodesDataType> in the circular list
             ptr = ptr->next;
 
         return ptr;
@@ -30,138 +29,223 @@ public:
     {
         m_head = NULL;
     };
-    LinkedList(Node *node)
+    LinkedList(Node<NodesDataType> *node)
     {
         m_head = node;
     };
     ~LinkedList() = default;
 
-    bool AppendNode(Node *node)
+    Node<NodesDataType> *UpdateNodeByKey(int key, NodesDataType data)
     {
-        if (IsFull())
-            throw std::overflow_error("LinkedList Overflow");
+        if (IsEmpty())
+            throw std::underflow_error("LinkedList is Empty!");
 
-        if (SearchNode((node->key) != NULL)) // Key already exists.
-            throw std::exception("Key Already Exists!");
+        Node<NodesDataType> *searchedNode = SearchNode(key);
 
-        if (m_head == NULL)
-        {
-            m_head = node; // Assign head to current node.
-            return true;
-        }
+        if (searchedNode == NULL) // Key doesnt exist.
+            throw std::runtime_error("Key Doesnt Exist!");
 
-        Node *lastNode = getLastNode();
-        lastNode->next = node;
+        searchedNode->data = data;
 
-        return true;
+        return searchedNode;
     }
 
-    bool PrependNode(Node *node)
+    bool AppendNode(Node<NodesDataType> *node)
     {
         if (IsFull())
             throw std::overflow_error("LinkedList Overflow");
 
-        if (SearchNode((node->key) != NULL)) // Key already exists.
-            throw std::exception("Key Already Exists!");
+        if (SearchNode(node->key) != NULL) // Key already exists.
+            throw std::runtime_error("Key Already Exists!");
 
         if (m_head == NULL)
         {
-            m_head = node; // Assign head to current node.
+            // First node<NodesDataType> in the list
+            m_head = node;
+            m_tail = node;
+            node->next = node; // Circular link
+            node->prev = node;
             return true;
         }
 
+        // Append to the end
+        m_tail->next = node;
+        node->prev = m_tail;
         node->next = m_head;
         m_head->prev = node;
-        m_head = node;
+        m_tail = node; // Update tail
 
         return true;
     }
 
-    bool InsertNodeAfter(int key, Node *node)
+    bool PrependNode(Node<NodesDataType> *node)
     {
         if (IsFull())
             throw std::overflow_error("LinkedList Overflow");
 
-        Node *currentNodeWithKey = SearchNode(key);
+        if (SearchNode(node->key) != NULL) // Key already exists.
+            throw std::runtime_error("Key Already Exists!");
 
-        if (currentNodeWithKey == NULL) // There is no Node within the Requested Key.
-            throw std::exception("No Key was Found!");
+        if (m_head == NULL)
+        {
+            // First node<NodesDataType> in the list
+            m_head = node;
+            m_tail = node;
+            node->next = node; // Circular link
+            node->prev = node;
+            return true;
+        }
 
-        if (SearchNode((node->key) != NULL)) // Node is already inserted with a Key.
-            throw std::exception("Node is Already Inserted with a Key [%s]!", std::string(node->key));
+        // Prepend to the beginning
+        node->next = m_head;
+        node->prev = m_tail;
+        m_head->prev = node;
+        m_tail->next = node;
+        m_head = node; // Update head
+
+        return true;
+    }
+
+    bool InsertNodeAfter(int key, Node<NodesDataType> *node)
+    {
+        if (IsFull())
+            throw std::overflow_error("LinkedList Overflow");
+
+        if (SearchNode(node->key) != NULL) // Node<NodesDataType> is already inserted with a Key.
+            throw std::runtime_error("Node<NodesDataType> is Already Inserted with a Key!");
+
+        Node<NodesDataType> *currentNodeWithKey = SearchNode(key);
+
+        if (currentNodeWithKey == NULL) // Key not found
+            throw std::runtime_error("No Key was Found!");
+
+        // Update tail if inserted after the tail
+        if (currentNodeWithKey == m_tail)
+            return AppendNode(node);
 
         node->next = currentNodeWithKey->next;
         node->prev = currentNodeWithKey;
-        currentNodeWithKey->prev = node->prev;
+
+        currentNodeWithKey->next->prev = node;
         currentNodeWithKey->next = node;
 
         return true;
     }
 
-    Node *DeleteNode()
+    bool DeleteNodeByKey(int key)
     {
         if (IsEmpty())
             throw std::underflow_error("LinkedList Underflow");
 
-        return m_stack[m_top--];
-    }
+        Node<NodesDataType> *nodeToDelete = SearchNode(key);
 
-    Node *SearchNode(int key) const
-    {
-        if (key < 0 || key > capacity)
-            throw std::out_of_range("Invalid key");
+        if (nodeToDelete == NULL)
+            throw std::runtime_error("Key Not Found!");
 
-        Node *temp = NULL;
-
-        Node *ptr = m_head;
-
-        while (ptr != NULL)
+        if (nodeToDelete == m_head && nodeToDelete == m_tail)
         {
-            if (ptr->key == key)
-                temp = ptr;
+            // Only one node<NodesDataType> in the list
+            m_head = NULL;
+            m_tail = NULL;
 
-            ptr = ptr->next;
+            delete nodeToDelete;
+            return true;
         }
 
-        // if (temp == NULL)
-        //     throw std::exception("Key not Found!");
+        if (nodeToDelete == m_head)
+        {
+            // Deleting the head
+            m_head = m_head->next;
+            m_head->prev = m_tail;
+            m_tail->next = m_head;
 
-        return temp;
+            delete nodeToDelete;
+            return true;
+        }
+
+        if (nodeToDelete == m_tail)
+        {
+            // Deleting the tail
+            m_tail = m_tail->prev;
+            m_tail->next = m_head;
+            m_head->prev = m_tail;
+
+            delete nodeToDelete;
+            return true;
+        }
+
+        // Deleting a middle node
+        nodeToDelete->prev->next = nodeToDelete->next;
+        nodeToDelete->next->prev = nodeToDelete->prev;
+
+        delete nodeToDelete;
+        return true;
+    }
+
+    Node<NodesDataType> *SearchNode(int key) const
+    {
+
+        if (IsEmpty())
+            return NULL;
+
+        Node<NodesDataType> *ptr = m_head;
+
+        do
+        {
+            if (ptr->key == key)
+                return ptr;
+
+            ptr = ptr->next;
+        } while (ptr != m_head); // Stop after one full cycle
+
+        return NULL;
     }
 
     int Count() const
     {
-        return sizeof(m_list) / sizeof(Node);
+        if (IsEmpty())
+            return 0;
+
+        int count = 0;
+        Node<NodesDataType> *current = m_head;
+
+        do
+        {
+            count++;
+            current = current->next;
+        } while (current != m_head); // Stop after one full cycle
+
+        return count;
     }
 
     bool IsEmpty() const
     {
+        // The list is empty if the head pointer is NULL
+
         return m_head == NULL;
     }
 
     bool IsFull() const
     {
-        return sizeof(m_list) / sizeof(Node) == capacity;
-    }
+        // The list is empty if the head pointer is NULL
 
-    std::ostream &operator<<(std::ostream &os, const Node &node) const
-    {
-        os << "Node Key: [" << node.key << "]"
-           << "\tNode Next: [" << (node.next ? std::to_string(node.next->key) : "nullptr") << "]"
-           << "\tNode Previous: [" << (node.prev ? std::to_string(node.prev->key) : "nullptr") << "]";
-        return os;
+        return Count() == capacity;
     }
 
     void Display() const
     {
-        Node *current = m_head;
-        int index = 0;
-
-        while (current != nullptr)
+        if (IsEmpty())
         {
-            std::cout << "Node [" << index << "]: " << *current << std::endl;
-            current = current->next;
-            index++;
+            std::cout << "The list is empty." << std::endl;
+            return;
         }
+
+        Node<NodesDataType> *current = m_head;
+
+        do
+        {
+            std::cout << *current << std::endl;
+            current = current->next;
+        } while (current != m_head); // Stop after one full cycle
     }
 };
