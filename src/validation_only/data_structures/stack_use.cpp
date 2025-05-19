@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stack.hpp"
+#include "mylib/data_structures/stack.hpp"
 
 int main()
 {

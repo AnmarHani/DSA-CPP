@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include <safe_linked_list_node.hpp>
+#include <mylib/data_structures/safe_linked_list_node.hpp>
 
 template <typename DataType, int capacity>
 class SafeLinkedList

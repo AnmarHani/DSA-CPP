@@ -1,5 +1,5 @@
 #include <iostream>
-#include "queue.hpp"
+#include "mylib/data_structures/queue.hpp"
 
 int main()
 {

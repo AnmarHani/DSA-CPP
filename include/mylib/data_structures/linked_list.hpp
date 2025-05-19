@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stdexcept>
-#include <linked_list_node.hpp>
+#include <mylib/data_structures/linked_list_node.hpp>
 
 // Double-Circular Linked List
 template <typename NodesDataType, int capacity>

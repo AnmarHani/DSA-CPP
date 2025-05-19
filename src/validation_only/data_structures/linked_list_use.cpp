@@ -1,6 +1,6 @@
 #include <iostream>
-#include <linked_list.hpp>
-#include <linked_list_node.hpp>
+#include <mylib/data_structures/linked_list.hpp>
+#include <mylib/data_structures/linked_list_node.hpp>
 
 int main()
 {

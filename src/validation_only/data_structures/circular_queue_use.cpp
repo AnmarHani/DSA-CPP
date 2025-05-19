@@ -1,5 +1,5 @@
 #include <iostream>
-#include "circular_queue.hpp"
+#include "mylib/data_structures/circular_queue.hpp"
 
 int main()
 {

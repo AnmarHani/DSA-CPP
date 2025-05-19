@@ -1,6 +1,6 @@
 #include <iostream>
-#include "safe_linked_list.hpp"
-#include "safe_linked_list_node.hpp"
+#include "mylib/data_structures/safe_linked_list.hpp"
+#include "mylib/data_structures/safe_linked_list_node.hpp"
 
 int main()
 {
