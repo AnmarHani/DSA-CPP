@@ -9,6 +9,7 @@ A Fullstack app for dealing with Data Structures and Algorithms, the main purpos
 - CrowCpp For HTTP API
 - Catch2 For Unit Testing
 - sqlite_orm for Database ORM (SQLite)
+- CMake + CPM as Build and Package Managers
 
 ## Frontend
 

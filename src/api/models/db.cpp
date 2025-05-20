@@ -4,7 +4,8 @@
 #include <string>
 
 // Define the User class
-struct User {
+struct User
+{
     int id;
     std::string firstName;
     std::string lastName;
@@ -14,7 +15,8 @@ struct User {
 };
 
 // Define the UserType class
-struct UserType {
+struct UserType
+{
     int id;
     std::string name;
 };

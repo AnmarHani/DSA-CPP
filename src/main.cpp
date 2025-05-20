@@ -1,10 +1,17 @@
-#include "crow.h"
+#include <mylib/api/server.hpp>
 #include <iostream>
 
 int main()
 {
-    std::cout << "Hello Un1v3rse!" << std::endl;
-    crow::SimpleApp app;
+    try
+    {
+        Server server = Server();
+        server.Start();
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << "Exception: " << ex.what() << std::endl;
+    }
 
     return 0;
 }
