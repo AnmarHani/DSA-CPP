@@ -1,13 +1,23 @@
 #pragma once
 #include <crow.h>
+#include <crow/middlewares/cors.h>
 #include <mylib/config/settings.hpp>
+#include <string>
+
+
+namespace HTTPResponse {
+    
+}
 
 class Server
 {
 private:
-    crow::SimpleApp m_app;
+    crow::App<crow::CORSHandler> m_app;
+    Server();
 
 public:
-    explicit Server(const Settings::Server &serverConfig = Settings::Server());
-    void Start();
+    const static Server& GetInstance();
+    void Setup();
+    void Start(bool isAutoSetup = true);
+    void AddRoute(const std::string &routePath, const crow::HTTPMethod &httpMethod, const std::string &handler);
 };

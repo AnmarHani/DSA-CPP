@@ -1,12 +1,36 @@
+#pragma once
+
 #include <string>
+#include <sqlite_orm/sqlite_orm.h>
 
-
-struct LinkedListNodeModel {
+struct LinkedListNodeModel
+{
     int key;
     std::string data;
-    int next;
+    int nextNodeKey;
+    int prevNodeKey;
+
+    int associatedLinkedListId;
 };
 
-struct LinkedListModel {
-    
+struct LinkedListModel
+{
+    int id;
 };
+
+inline auto makeLinkedListTable()
+{
+    return sqlite_orm::make_table("linked_lists",
+                                  sqlite_orm::make_column("id", &LinkedListModel::id, primary_key().autoincrement()));
+}
+
+inline auto makeLinkedListNodeTable()
+{
+    return sqlite_orm::make_table("linked_list_nodes",
+                      sqlite_orm::make_column("key", &LinkedListNodeModel::key, primary_key().autoincrement()),
+                      sqlite_orm::make_column("data", &LinkedListNodeModel::data, default_value("0")),
+                      sqlite_orm::make_column("next_node_key", &LinkedListNodeModel::nextNodeKey),
+                      sqlite_orm::make_column("prev_node_key", &LinkedListNodeModel::prevNodeKey),
+                      sqlite_orm::make_column("associated_linked_list_id", &LinkedListNodeModel::associatedLinkedListId),
+                      sqlite_orm::foreign_key(&LinkedListNodeModel::associatedLinkedListId).references(&LinkedListModel::id));
+}

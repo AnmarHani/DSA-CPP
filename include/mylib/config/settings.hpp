@@ -13,19 +13,19 @@ namespace Settings
 
     struct Server
     {
-        std::string HOST = "127.0.0.1";
-        int PORT = 8080;
-        int THREADS_NUM = 2;
+        static inline const std::string HOST = "127.0.0.1";
+        static inline const int PORT = 8080;
+        static inline const int THREADS_NUM = 2;
 
-        LOG_LEVELS LOG_LEVEL = LOG_LEVELS::DEBUG;
+        static inline const LOG_LEVELS LOG_LEVEL = LOG_LEVELS::DEBUG;
 
-        bool IS_CORS_ENABLED = true;
-        std::string ALLOWED_CORS_ORIGINS = "*";
+        static inline const bool IS_CORS_ENABLED = true;
+        static inline const std::string ALLOWED_CORS_ORIGINS = "*";
     };
 
     struct Database
     {
-        std::string DB_ENGINE = "sqlite";
-        std::string HOST = "db.sqlite";
+        static inline const std::string DB_ENGINE = "sqlite";
+        static inline const std::string HOST = "db.sqlite";
     };
 }
