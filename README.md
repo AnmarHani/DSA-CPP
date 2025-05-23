@@ -75,6 +75,29 @@ npm run dev
 - g_* for Global Variables
 - s_* for Global Static Variables
 
+## Codebase Statistics
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JavaScript                    4777          47914          96822         905275
+TypeScript                    2055          17285         117837         156938
+JSON                           483             63              0          84499
+Markdown                       335          21688            217          56953
+C++                             23            485            712           3906
+CSS                             49            458            367           2954
+C/C++ Header                    25            359            271           1660
+Astro                           11             79             98            449
+Text                             9            175              0            373
+Python                           1              1              8            271
+YAML                             3              6              2            254
+AppleScript                      1             11             23             61
+INI                              1              4              0             16
+XML                              1              0              0             10
+SVG                              1              0              0              9
+HTML                             2              0              0              2
+-------------------------------------------------------------------------------
+SUM:                          7777          88528         216357        1213630
+-------------------------------------------------------------------------------
+
 ## Some Confusing Concepts that I learned (in C++) for me :)
 - constexpr:
 Declares that a value or function can be calculated at compile time. Every constexpr is also const, but not every const is constexpr.
@@ -146,6 +169,4 @@ using uint = unsigned int;
 | `ptrdiff_t` | Result of subtracting pointers    |
 | `intmax_t`  | Biggest possible signed integer   |
 | `uintmax_t` | Biggest possible unsigned integer |
-
-
 
