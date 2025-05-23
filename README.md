@@ -76,25 +76,16 @@ npm run dev
 - s_* for Global Static Variables
 
 ## Codebase Statistics
-| Language      | files | blank   | comment | code    |
-|---------------|-------|---------|---------|---------|
-| JavaScript    | 4777  | 47,914  | 96,822  | 905,275 |
-| TypeScript    | 2055  | 17,285  | 117,837 | 156,938 |
-| JSON          | 483   | 63      | 0       | 84,499  |
-| Markdown      | 335   | 21,688  | 217     | 56,953  |
-| C++           | 23    | 485     | 712     | 3,906   |
-| CSS           | 49    | 458     | 367     | 2,954   |
-| C/C++ Header  | 25    | 359     | 271     | 1,660   |
-| Astro         | 11    | 79      | 98      | 449     |
-| Text          | 9     | 175     | 0       | 373     |
-| Python        | 1     | 1       | 8       | 271     |
-| YAML          | 3     | 6       | 2       | 254     |
-| AppleScript   | 1     | 11      | 23      | 61      |
-| INI           | 1     | 4       | 0       | 16      |
-| XML           | 1     | 0       | 0       | 10      |
-| SVG           | 1     | 0       | 0       | 9       |
-| HTML          | 2     | 0       | 0       | 2       |
-| **SUM:**      | 7777  | 88,528  | 216,357 | 1,213,630 |
+| Language      | files | blank | comment | code |
+|---------------|-------|-------|---------|------|
+| C/C++ Header  | 18    | 188   | 50      | 758  |
+| C++           | 16    | 185   | 129     | 653  |
+| JSON          | 4     | 0     | 0       | 36   |
+| Astro         | 2     | 2     | 0       | 17   |
+| SVG           | 1     | 0     | 0       | 9    |
+| JavaScript    | 1     | 2     | 2       | 7    |
+| CSS           | 1     | 0     | 0       | 1    |
+| **SUM:**      | 43    | 377   | 181     | 1481 |
 
 ## Some Confusing Concepts that I learned (in C++) for me :)
 - constexpr:
