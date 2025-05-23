@@ -1,20 +1,24 @@
 #pragma once
+#include <vector>
 
 namespace Sort
 {
     template <typename Type>
-    class Sequential
-    {
-    public:
-        static int LinearSearch(const std::vector<Type> &data, const Type &target);
+    class Comparison {
+        void BubbleSort(std::vector<Type> &data);
+        void InsertionSort(std::vector<Type> &data);
+        void SelectionSort(std::vector<Type> &data);
+        void QuickSort(std::vector<Type> &data);
+        void MergeSort(std::vector<Type> &data);
+        void HeapSort(std::vector<Type> &data);
     };
 
     template <typename Type>
-    class Interval
-    {
-    public:
-        static int BinarySearch(const std::vector<Type> &data, const Type &target, int start_idx = NULL, int end_idx = NULL);
+    class NonComparison {
+        void CountingSort(std::vector<Type> &data);
+        void RadixSort(std::vector<Type> &data);
     };
+
 }
 
-#include <mylib/algorithms/templates/search_algorithms.tpp>
+#include <mylib/algorithms/templates/sort_algorithms.tpp>

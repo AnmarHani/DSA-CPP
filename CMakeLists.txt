@@ -84,7 +84,7 @@ CPMAddPackage(
 # ------------------------------
 # Collect all .cpp files except src/main.cpp
 file(GLOB_RECURSE LIB_SOURCES CONFIGURE_DEPENDS src/*.cpp)
-list(REMOVE_ITEM LIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp") 
+list(REMOVE_ITEM LIB_SOURCES "main.cpp")
 
 # Remove all files in src/validation_only from LIB_SOURCES (it is just indiviually run, just for validating the code, not in production)
 file(GLOB_RECURSE VALIDATION_SOURCES CONFIGURE_DEPENDS src/validation_only/*.cpp)
@@ -97,7 +97,7 @@ target_include_directories(mylib PUBLIC include)
 # ------------------------------
 # Main Application
 # ------------------------------
-add_executable(DSACPP src/main.cpp)
+add_executable(DSACPP main.cpp)
 
 target_include_directories(DSACPP PRIVATE include)
 
@@ -110,6 +110,14 @@ target_include_directories(DSACPP PRIVATE ${crow_SOURCE_DIR}/include)
 
 target_include_directories(mylib PUBLIC ${sqlite_orm_SOURCE_DIR}/include)
 target_include_directories(DSACPP PRIVATE ${sqlite_orm_SOURCE_DIR}/include)
+
+find_package(SQLite3 REQUIRED)
+target_link_libraries(mylib PUBLIC SQLite::SQLite3)
+target_link_libraries(DSACPP PRIVATE SQLite::SQLite3)
+
+find_library(SQLITE3_LIBRARY sqlite3)
+target_link_libraries(mylib PUBLIC ${SQLITE3_LIBRARY})
+target_link_libraries(DSACPP PRIVATE ${SQLITE3_LIBRARY})
 
 target_link_libraries(DSACPP PRIVATE mylib)
 

@@ -2,10 +2,13 @@
 
 #include <mylib/api/server.hpp>
 #include <mylib/config/settings.hpp>
+#include <type_traits>
 
-const Server &Server::GetInstance()
+Server::Server() = default;
+
+Server &Server::GetInstance()
 {
-    static const Server instance;
+    static Server instance;
     return instance;
 }
 
@@ -27,12 +30,11 @@ void Server::Setup()
     m_app.bindaddr(Settings::Server::HOST);
     m_app.multithreaded().concurrency(Settings::Server::THREADS_NUM);
     crow::logger::setLogLevel(static_cast<crow::LogLevel>(Settings::Server::LOG_LEVEL));
-}
 
-void Server::Start(bool isAutoSetup)
-{
-    if (isAutoSetup)
-        Setup();
+    CROW_ROUTE(m_app, "/health/routes").methods(crow::HTTPMethod::GET)([this]()
+                                                                       {
+        crow::json::wvalue result;
+        result["routes"] = m_registeredRoutes;
 
-    m_app.run_async();
+        return crow::response(result); });
 }

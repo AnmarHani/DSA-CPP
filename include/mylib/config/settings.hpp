@@ -21,6 +21,12 @@ namespace Settings
 
         static inline const bool IS_CORS_ENABLED = true;
         static inline const std::string ALLOWED_CORS_ORIGINS = "*";
+
+        static inline const std::string API_VERSION = "v1";
+        static inline const std::string API_PREFIX = "/" + API_VERSION + "/api";
+
+        static inline const std::string STATIC_FILES_PATH = "static";
+        static inline const std::string DYNAMIC_FILES_PATH = "media";
     };
 
     struct Database

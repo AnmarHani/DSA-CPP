@@ -9,3 +9,15 @@ crow::response HTTPResponse::badRequest(const std::string &message)
         crow::BAD_REQUEST,
         crow::json::wvalue{{"status", "ERROR"}, {"message", message}});
 }
+crow::response HTTPResponse::internalServerError(const std::string &message)
+{
+    return crow::response(
+        crow::INTERNAL_SERVER_ERROR,
+        crow::json::wvalue{{"status", "ERROR"}, {"message", message}});
+}
+crow::response HTTPResponse::notFound(const std::string &message)
+{
+    return crow::response(
+        crow::NOT_FOUND,
+        crow::json::wvalue{{"status", "ERROR"}, {"message", message}});
+}
