@@ -21,20 +21,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # )
 # FetchContent_MakeAvailable(CPM)
 
-# # Catch2 for testing
-# CPMAddPackage(
-#   NAME Catch2
-#   GITHUB_REPOSITORY catchorg/Catch2
-#   VERSION 3.4.0
-# )
-
-# # Crow for HTTP server
-# CPMAddPackage(
-#   NAME crow
-#   GITHUB_REPOSITORY CrowCpp/crow
-#   VERSION 1.0+4
-# )
-
 # Bootstrap CPM.cmake (CPM recommends this minimal "bootstrap" pattern)
 set(CPM_DOWNLOAD_VERSION 0.42.0)
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
@@ -63,6 +49,14 @@ CPMAddPackage(
   NAME Catch2
   GITHUB_REPOSITORY catchorg/Catch2
   VERSION 3.8.1
+)
+
+# CPR for HTTP Client
+CPMAddPackage(
+  NAME cpr
+  GITHUB_REPOSITORY libcpr/cpr
+  GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06
+  OPTIONS "CPR_USE_SYSTEM_CURL OFF"
 )
 
 # Crow for HTTP server
@@ -129,17 +123,26 @@ set_target_properties(DSACPP PROPERTIES OUTPUT_NAME "DSA-CPP")
 # ------------------------------
 enable_testing()
 
-file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS tests/*.cpp)
-add_executable(unit_tests ${TEST_SOURCES})
-target_link_libraries(unit_tests PRIVATE mylib Catch2::Catch2WithMain)
-target_include_directories(unit_tests PRIVATE include)
+file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS tests/**/*.cpp)
+
+add_executable(tests ${TEST_SOURCES})
+
+target_link_libraries(tests
+    PRIVATE
+    mylib
+    Catch2::Catch2WithMain
+    cpr::cpr
+    SQLite::SQLite3
+)
+
+target_include_directories(tests PRIVATE include)
 
 # Add Catch2's extras directory to CMake module path
 list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 
 # Include Catch2's CMake module for test discovery
 include(Catch)
-catch_discover_tests(unit_tests)
+catch_discover_tests(tests)
 
 # ------------------------------
 # IDE Organization

@@ -8,6 +8,7 @@ A Fullstack app for dealing with Data Structures and Algorithms, the main purpos
 
 - CrowCpp For HTTP API
 - Catch2 For Unit Testing
+- CPR as an HTTP Client for Integration Testing
 - sqlite_orm for Database ORM (SQLite)
 - CMake + CPM as Build and Package Managers
 
@@ -19,7 +20,7 @@ A Fullstack app for dealing with Data Structures and Algorithms, the main purpos
 
 ## Database
 
-- SQL (SQLite)
+- Relational DB SQL (SQLite)
 
 # How to Setup (Running the app locally)
 
@@ -49,6 +50,16 @@ npm install
 cd frontend
 npm run dev
 ```
+
+# Implementations
+## Data Structures
+- Double-Circular LinkedList
+- Queue
+- Heap
+- Tree
+- Stack 
+
+
 ## Naming Conventions
 
 #### PascalCase

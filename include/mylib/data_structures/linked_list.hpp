@@ -3,7 +3,29 @@
 #include <stdexcept>
 #include <mylib/data_structures/linked_list_node.hpp>
 
-// Double-Circular Linked List
+/**
+ * @brief Double-Circular Linked List.
+ *
+ * @tparam NodesDataType The type of data each node in the linked list holds.
+ * @tparam capacity The fixed capacity of the linked list.
+ *
+ * @note Time Complexity: O(n)
+ * @note Space Complexity: O(1)
+ *
+ * @throws std::invalid_argument if an operation receives invalid input.
+ *
+ * @example
+ * LinkedList<int, 10> list1{};                     // Preferred default construction
+ * auto list2 = std::make_unique<LinkedList<int, 10>>(); // Smart pointer (unique), Preferred for exclusive ownership.
+ * auto list3 = std::make_shared<LinkedList<int, 10>>(); // Smart pointer (shared), Use when multiple objects share the same instance.
+ *
+ * // Not Recommended:
+ * LinkedList<int, 10>* list4 = new LinkedList<int, 10>(); // Manual delete required
+ * delete list4;
+ * 
+ * // Not Recommended:
+ * LinkedList<int, 10> list(); // This does NOT create an object "Most Vexing Parse". It is a function named list returning a LinkedList<int, 10>.
+ */
 template <typename NodesDataType, int capacity>
 class LinkedList
 {
